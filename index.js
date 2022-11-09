@@ -2,14 +2,15 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 try {
-    // `who-to-greet` input defined in action metadata file
+    // get input parameter from action.yml
     const nameToGreet = core.getInput('who-to-greet');
-    console.log(`Hello ${nameToGreet}!`);
+    console.log(`input param from main.yml: ${nameToGreet}!`);
+
+    // set output parameter
     const time = (new Date()).toTimeString();
     core.setOutput("time", time);
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
+    
+    console.log(`Application is running: ${time}`);
 } catch (error) {
-    core.setFailed(error.message);
+    console.log(error.message);
 }
